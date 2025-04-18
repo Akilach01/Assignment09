@@ -2,13 +2,101 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Assignment 09</title>
+    <title>Assignment09_Knight Rider Light </title>
+    <style>
+        body {
+          background-color: #000;
+          color: #fff;
+          font-family: sans-serif;
+          text-align: center;
+          padding-top: 50px;
+        }
 
+        #scanner {
+          display: flex;
+          gap: 10px;
+          justify-content: center;
+          margin: 40px auto;
+          width: fit-content;
+        }
+
+        .light {
+          width: 30px;
+          height: 30px;
+          background-color: #111;
+          border-radius: 50%;
+          box-shadow: 0 0 5px #000;
+          transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .active {
+          background-color: red;
+          box-shadow: 0 0 20px red;
+        }
+
+        button {
+          padding: 10px 20px;
+          margin: 10px;
+          font-size: 16px;
+          border: none;
+          border-radius: 6px;
+          background-color: #444;
+          color: #fff;
+          cursor: pointer;
+          transition: background 0.2s;
+        }
+
+        button:hover {
+          background-color: #666;
+        }
+    </style>
 </head>
-
-
-
 <body>
 
+<h1>Knight Rider Light Scanner</h1>
+
+<div id="scanner">
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+</div>
+
+<button onclick="startScanner()">Start</button>
+<button onclick="stopScanner()">Stop</button>
+
+<script>
+    const lights = document.querySelectorAll('.light');
+    let current = 0;
+    let direction = 1;
+    let intervalId = null;
+
+    const updateLights = () => {
+      lights.forEach(light => light.classList.remove('active'));
+      lights[current].classList.add('active');
+
+      current += direction;
+
+      if (current === lights.length - 1 || current === 0) {
+        direction *= -1; // Reverse direction
+      }
+    };
+
+    const startScanner = () => {
+      if (!intervalId) {
+        intervalId = setInterval(updateLights, 100);
+      }
+    };
+
+    const stopScanner = () => {
+      clearInterval(intervalId);
+      intervalId = null;
+      lights.forEach(light => light.classList.remove('active'));
+    };
+</script>
 </body>
 </html>
